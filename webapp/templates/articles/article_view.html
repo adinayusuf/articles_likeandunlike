@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block nav %}
+    {% if request.user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url "webapp:create_article" %}">Создание статьи</a>
+        </li>
+        {% if perms.webapp.change_article or user == article.author %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url "webapp:update_article" article.pk %}">Редактировать</a>
+            </li>
+        {% endif %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url "webapp:article_comment_create" article.pk %}">Добавить коммент</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{% url "webapp:delete_article" article.pk %}">Удалить</a>
+        </li>
+
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="card mt-3">
+        <div class="card-body text-center">
+            <h5 class="card-title">{{ article.upper }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Автор: {{ article.author }}</h6>
+            <p class="card-text">{{ article.content }}</p>
+        </div>
+    </div>
+    <h3 class="my-3 text-center">Комментарии</h3>
+    <div class="row">
+        {% for comment in comments %}
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <p class="card-text">{{ comment.text }}</p>
+                    </div>
+                    <div class="btn-group w-100" role="group" aria-label="Basic mixed styles example">
+                        <a class="btn btn-danger" href="{% url "webapp:update_comment" comment.pk %}">Изменить</a>
+                        <a class="btn btn-warning" href="{% url "webapp:delete_comment" comment.pk %}">Удалить</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>Комментариев нет</p>
+        {% endfor %}
+    </div>
+    <h3>Теги</h3>
+    {% for tag in article.tags.all %}
+        <p>{{ tag.name }}</p>
+    {% empty %}
+        <p>Тэгов нет</p>
+    {% endfor %}
+    <a href="{% url "webapp:index" %}">На главную</a>
+
+    <div class="modal fade" id="articleDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="articleDeleteModal">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Вы уверены что хотите удалить статью {{ article.title }}?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <form action="{% url "webapp:update_article" article.pk %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Да</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

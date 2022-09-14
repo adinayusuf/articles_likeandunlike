@@ -1,0 +1,33 @@
+{% load static %}
+<h1 class="text-center">Статьи</h1>
+<div class="row">
+    {% for article in articles %}
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ article.title }}</h5>
+                </div>
+                <a href="{{ article.get_absolute_url }}" class="card-link btn btn-primary">Подробнее</a>
+            </div>
+        </div>
+ {% if user.is_authenticated %}
+        {% if article.is_liked %}
+            <form action='{% url "webapp:article_unlike" article.pk %}' data-method="delete" class="like-form">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger d-inline like-btn">Unlike</button>
+                <div class="like-counter d-inline">{{ article.likes.count }}</div>
+            </form>
+        {% else %}
+            <form action='{% url "webapp:article_like" article.pk %}' data-method="post" class="like-form">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-danger d-inline like-btn">Like</button>
+                <div class="like-counter d-inline">{{ article.likes.count }}</div>
+            </form>
+        {% endif %}
+
+    {% empty %}
+    {% endfor %}
+    {% if is_paginated %}
+        <div class="text-center">{% include "partial/pagination.html" %}</div>
+    {% endif %}
+</div>

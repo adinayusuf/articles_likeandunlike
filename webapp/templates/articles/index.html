@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+{% block nav %}
+
+    {% if perms.webapp.add_article %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url "webapp:create_article" %}">Создание статьи</a>
+        </li>
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <div class="mt-3">
+        {% include "partial/search.html" %}
+    </div>
+
+    {% include "partial/articles_list_partial.html" %}
+{% endblock %}
+
