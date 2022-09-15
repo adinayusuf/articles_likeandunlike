@@ -1,19 +1,17 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.contrib.auth.models import Permission
-from django.db.models import Q
+from django.db.models import Q, Case, When, BooleanField
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import redirect, get_object_or_404
+
 from django.urls import reverse_lazy
 
 # Create your views here.
 from django.utils.http import urlencode
 from django.views import View
 
-from webapp.forms import ArticleForm, SearchForm, ArticleDeleteForm, UserArticleForm
-from webapp.models import Article
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
-from article_project.source.webapp.models import LikeArticle
+from webapp.forms import SearchForm, ArticleForm, ArticleDeleteForm
+from webapp.models import LikeArticle, Article
 
 
 class IndexView(ListView):
@@ -24,25 +22,29 @@ class IndexView(ListView):
     paginate_by = 6
 
     def get(self, request, *args, **kwargs):
-        # print(request.user.user_permissions.all())
-        # request.user.user_permissions.add(Permission.objects.get(codename="delete_article"))
-        # print(request.user.user_permissions.all())
         self.form = self.get_search_form()
         self.search_value = self.get_search_value()
         return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
+        queryset = super().get_queryset().order_by("-updated_at")
         if self.search_value:
-            return Article.objects.filter(
+            queryset = Article.objects.filter(
                 Q(author__icontains=self.search_value) |
                 Q(title__icontains=self.search_value)).order_by("-updated_at")
-        return Article.objects.all().order_by("-updated_at")
+        queryset = queryset.annotate(
+            is_liked=Case(
+                When(likes__user_id=self.request.user.id,
+                     then=True),
+                default=False,
+                output_field=BooleanField()))
+        return queryset
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
         context["form"] = self.form
         if self.search_value:
-            query = urlencode({'search': self.search_value})  # search=dcsdvsdvsd
+            query = urlencode({'search': self.search_value})
             context['query'] = query
             context['search'] = self.search_value
         return context
@@ -68,11 +70,6 @@ class ArticleView(DetailView):
 class CreateArticle(LoginRequiredMixin, CreateView):
     form_class = ArticleForm
     template_name = "articles/create.html"
-
-    # def dispatch(self, request, *args, **kwargs):
-    #     if request.user.is_authenticated and self.request.user.has_perm("webapp.add_article"):
-    #         return super().dispatch(request, *args, **kwargs)
-    #     return redirect("accounts:login")
 
     def form_valid(self, form):
         user = self.request.user
@@ -100,9 +97,6 @@ class DeleteArticle(PermissionRequiredMixin, DeleteView):
     def has_permission(self):
         return super().has_permission() or self.request.user == self.get_object().author
 
-        # return self.request.user.is_superuser or \
-        #        self.request.user.groups.filter(name__in=("Модераторы",)).exists()
-
     def post(self, request, *args, **kwargs):
         form = self.form_class(data=request.POST, instance=self.get_object())
         if form.is_valid():
@@ -116,18 +110,18 @@ class ArticleLikeCreate(LoginRequiredMixin, View):
         pk = kwargs.get('pk')
         user = request.user
         if LikeArticle.objects.filter(user=user, article_id=pk).exists():
-            return HttpResponse(status=403, content='Лайк уже есть')
+            return HttpResponse(status=403, content={})
         LikeArticle.objects.create(user=user, article_id=pk)
         count = LikeArticle.objects.filter(article_id=pk).count()
         return JsonResponse({'count': count, 'action': 'like', 'pk': pk})
 
 
 class ArticleLikeDelete(LoginRequiredMixin, View):
-    def post(self, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs):
         pk = kwargs.get('pk')
         user = request.user
-        if LikeArticle.objects.filter(user=user, article_id=pk).exists():
-            return HttpResponse(status=403, content='Лайка не было')
-        LikeArticle.objects.create(user=user, article_id=pk).delete()
+        if not LikeArticle.objects.filter(user=user, article_id=pk).exists():
+            return HttpResponse(status=403, content={})
+        LikeArticle.objects.get(user=user, article_id=pk).delete()
         count = LikeArticle.objects.filter(article_id=pk).count()
-        return JsonResponse({'count': count, 'action': 'like', 'pk': pk})
+        return JsonResponse({'count': count, 'action': 'unlike', 'pk': pk})

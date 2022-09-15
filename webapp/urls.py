@@ -1,14 +1,11 @@
 from django.urls import path
 from django.views.generic import RedirectView
 
-from views import IndexView, CreateArticle, ArticleView, UpdateArticle, DeleteArticle, CreateCommentView, \
-    UpdateComment, DeleteComment
 
-from article_project.source.webapp.views import ArticleLikeCreate, ArticleLikeDelete
+from webapp.views import ArticleLikeCreate, IndexView, CreateArticle, ArticleView, UpdateArticle, DeleteArticle, \
+    CreateCommentView, UpdateComment, DeleteComment, ArticleLikeDelete
 
 app_name = "webapp"
-
-
 
 
 urlpatterns = [
