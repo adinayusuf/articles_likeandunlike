@@ -16,13 +16,13 @@
         <form action='{% url "webapp:article_unlike" article.pk %}' data-method="delete" class="like-form">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger d-inline like-btn">Unlike</button>
-            <div class="like-counter d-inline">{{ article.likes.count }}</div>
+            <div class=" text-primary like-counter d-inline">{{ article.likes.count }}</div>
         </form>
     {% else %}
         <form action='{% url "webapp:article_like" article.pk %}' data-method="post" class="like-form">
             {% csrf_token %}
-            <button type="submit" class="btn btn-outline-danger d-inline like-btn">Like</button>
-            <div class="like-counter d-inline">{{ article.likes.count }}</div>
+            <button type="submit" class=" btn btn-outline-danger d-inline like-btn">Like</button>
+            <div class="like-counter d-inline text-primary"> {{ article.likes.count }} </div>
         </form>
     {% endif %}
     {% endif %}

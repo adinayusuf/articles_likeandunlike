@@ -1,0 +1,156 @@
+[
+{
+    "model": "webapp.article",
+    "pk": 2,
+    "fields": {
+        "created_at": "2022-09-15T14:27:18.494Z",
+        "updated_at": "2022-09-15T14:27:18.494Z",
+        "title": "What is Lorem Ipsum?",
+        "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+        "author": 1,
+        "tags": []
+    }
+},
+{
+    "model": "webapp.article",
+    "pk": 3,
+    "fields": {
+        "created_at": "2022-09-15T14:27:40.642Z",
+        "updated_at": "2022-09-15T14:27:40.642Z",
+        "title": "Why do we use it?",
+        "content": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+        "author": 1,
+        "tags": []
+    }
+},
+{
+    "model": "webapp.article",
+    "pk": 4,
+    "fields": {
+        "created_at": "2022-09-15T14:27:55.649Z",
+        "updated_at": "2022-09-15T14:27:55.649Z",
+        "title": "Where does it come from?",
+        "content": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.",
+        "author": 1,
+        "tags": []
+    }
+},
+{
+    "model": "webapp.article",
+    "pk": 5,
+    "fields": {
+        "created_at": "2022-09-15T14:28:13.598Z",
+        "updated_at": "2022-09-15T14:28:13.598Z",
+        "title": "Where can I get some?",
+        "content": "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
+        "author": 1,
+        "tags": []
+    }
+},
+{
+    "model": "webapp.article",
+    "pk": 6,
+    "fields": {
+        "created_at": "2022-09-15T14:28:31.288Z",
+        "updated_at": "2022-09-15T14:28:31.288Z",
+        "title": "The standard Lorem Ipsum passage, used since the 1",
+        "content": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "author": 1,
+        "tags": []
+    }
+},
+{
+    "model": "webapp.article",
+    "pk": 7,
+    "fields": {
+        "created_at": "2022-09-15T14:28:44.008Z",
+        "updated_at": "2022-09-15T14:28:44.008Z",
+        "title": "Section 1.10.32 of \"de Finibus Bonorum et Malorum\"",
+        "content": "\"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,",
+        "author": 1,
+        "tags": []
+    }
+},
+{
+    "model": "webapp.comment",
+    "pk": 1,
+    "fields": {
+        "created_at": "2022-09-15T14:28:59.845Z",
+        "updated_at": "2022-09-15T14:28:59.845Z",
+        "text": "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?\"",
+        "author": 1,
+        "article": 2
+    }
+},
+{
+    "model": "webapp.comment",
+    "pk": 2,
+    "fields": {
+        "created_at": "2022-09-15T14:29:12.339Z",
+        "updated_at": "2022-09-15T14:29:12.339Z",
+        "text": "of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself",
+        "author": 1,
+        "article": 3
+    }
+},
+{
+    "model": "webapp.comment",
+    "pk": 3,
+    "fields": {
+        "created_at": "2022-09-15T14:29:23.708Z",
+        "updated_at": "2022-09-15T14:29:23.708Z",
+        "text": "\"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi",
+        "author": 1,
+        "article": 4
+    }
+},
+{
+    "model": "webapp.comment",
+    "pk": 4,
+    "fields": {
+        "created_at": "2022-09-15T14:29:35.342Z",
+        "updated_at": "2022-09-15T14:29:35.343Z",
+        "text": "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment",
+        "author": 1,
+        "article": 5
+    }
+},
+{
+    "model": "webapp.comment",
+    "pk": 5,
+    "fields": {
+        "created_at": "2022-09-15T14:29:51.954Z",
+        "updated_at": "2022-09-15T14:29:51.955Z",
+        "text": "hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.\"",
+        "author": 1,
+        "article": 2
+    }
+},
+{
+    "model": "webapp.tag",
+    "pk": 1,
+    "fields": {
+        "created_at": "2022-09-15T14:30:02.012Z",
+        "updated_at": "2022-09-15T14:30:02.013Z",
+        "name": "lorem"
+    }
+},
+{
+    "model": "webapp.tag",
+    "pk": 2,
+    "fields": {
+        "created_at": "2022-09-15T14:30:11.877Z",
+        "updated_at": "2022-09-15T14:30:11.877Z",
+        "name": "test"
+    }
+},
+{
+    "model": "webapp.tag",
+    "pk": 3,
+    "fields": {
+        "created_at": "2022-09-15T14:30:18.907Z",
+        "updated_at": "2022-09-15T14:30:18.907Z",
+        "name": "upsum"
+    }
+}
+]

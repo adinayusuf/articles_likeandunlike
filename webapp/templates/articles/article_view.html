@@ -26,9 +26,26 @@
             <h5 class="card-title">{{ article.upper }}</h5>
             <h6 class="card-subtitle mb-2 text-muted">Автор: {{ article.author }}</h6>
             <p class="card-text">{{ article.content }}</p>
+            {% if user.is_authenticated %}
+                {% if article.is_liked %}
+                    <form action='{% url "webapp:article_unlike" article.pk %}' data-method="delete" class="like-form">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger d-inline like-btn">Unlike</button>
+                        <div class=" text-primary like-counter d-inline">{{ article.likes.count }}</div>
+                    </form>
+                {% else %}
+                    <form action='{% url "webapp:article_like" article.pk %}' data-method="post" class="like-form">
+                        {% csrf_token %}
+                        <button type="submit" class=" btn btn-outline-danger d-inline like-btn">Like</button>
+                        <div class="like-counter d-inline text-primary"> {{ article.likes.count }} </div>
+                    </form>
+                {% endif %}
+            {% endif %}
         </div>
+
     </div>
-    <h3 class="my-3 text-center">Комментарии</h3>
+
+    <h3 class="my-3 ">Комментарии</h3>
     <div class="row">
         {% for comment in comments %}
             <div class="col-12 col-md-6 col-lg-4">
@@ -42,17 +59,18 @@
                     </div>
                 </div>
             </div>
-        {% empty %}
+
+            {% empty %}
             <p>Комментариев нет</p>
         {% endfor %}
     </div>
     <h3>Теги</h3>
     {% for tag in article.tags.all %}
         <p>{{ tag.name }}</p>
-    {% empty %}
+        {% empty %}
         <p>Тэгов нет</p>
     {% endfor %}
-    <a href="{% url "webapp:index" %}">На главную</a>
+    <a class="btn btn-primary" href="{% url "webapp:index" %}">На главную</a>
 
     <div class="modal fade" id="articleDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
@@ -75,4 +93,5 @@
             </div>
         </div>
     </div>
+
 {% endblock %}
