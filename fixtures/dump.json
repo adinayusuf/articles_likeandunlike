@@ -64,11 +64,13 @@
     "pk": 7,
     "fields": {
         "created_at": "2022-09-15T14:28:44.008Z",
-        "updated_at": "2022-09-15T14:28:44.008Z",
+        "updated_at": "2022-09-22T18:50:59.579Z",
         "title": "Section 1.10.32 of \"de Finibus Bonorum et Malorum\"",
-        "content": "\"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,",
+        "content": "\"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit",
         "author": 1,
-        "tags": []
+        "tags": [
+            1
+        ]
     }
 },
 {
@@ -124,6 +126,17 @@
         "text": "hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.\"",
         "author": 1,
         "article": 2
+    }
+},
+{
+    "model": "webapp.comment",
+    "pk": 6,
+    "fields": {
+        "created_at": "2022-09-22T18:50:47.501Z",
+        "updated_at": "2022-09-22T18:50:47.501Z",
+        "text": "qwer",
+        "author": 1,
+        "article": 7
     }
 },
 {
